@@ -24,7 +24,6 @@ router.post("/register", (req, res) => {
   //是否存在用户
   User.findOne({ username: username })
     .then(data => {
-      console.log(data);
       return new Promise((resolve, reject) => {
         if (data) {
           res.send(response.out(CODE.ERROR_REGISTER_EXIST, {}, "用户已注册过"));
@@ -43,7 +42,6 @@ router.post("/register", (req, res) => {
       }).save();
     })
     .then(data => {
-      console.log(data);
       if (data) {
         //返回
         res.send(response.succ({}, "注册成功"));

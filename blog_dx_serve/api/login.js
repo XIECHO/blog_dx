@@ -37,7 +37,6 @@ router.post("/login", function(req, res) {
       });
     })
     .then(data => {
-      console.log(data);
       const token = common.signtoken(JSON.stringify(data));
       redis.setkv("type", data.type, config.TOKEN_EXPIRE);
       redis.setkv("token", token, config.TOKEN_EXPIRE).then(() => {

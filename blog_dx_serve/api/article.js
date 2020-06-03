@@ -22,42 +22,49 @@ router.get("/article/list", function(req, res) {
   let pageSize = parseInt(req.query.pageSize);
   let skip = (page - 1) * pageSize;
 
-  Article.countDocuments({}, function(err, total) {
-    if (err) {
-      res.send(response.err(CODE.ERROR_DATABASE, err, err.message));
-    } else {
-      let articleModel = Article.find(
-        {},
-        {
-          title: true,
-          tags: true,
-          date: true,
-          lastDate: true,
-          abstract: true,
-          readCount: true,
-          commentCount: true,
-          type: true
-        }
-      )
-        .sort({ date: -1 })
-        .skip(skip)
-        .limit(pageSize);
-      articleModel.exec(function(err, docs) {
+  redis
+    .getkey("type")
+    .then(type => {
+      let params = {};
+      if (type != "admin") {
+        params = { type: 0 };
+      }
+      return Promise.resolve(params);
+    })
+    .then(params => {
+      Article.countDocuments(params, function(err, total) {
         if (err) {
           res.send(response.err(CODE.ERROR_DATABASE, err, err.message));
         } else {
-          res.send(
-            response.succ({ total, count: docs.length, list: docs }, "")
-          );
+          let articleModel = Article.find(params, {
+            title: true,
+            tags: true,
+            date: true,
+            lastDate: true,
+            abstract: true,
+            readCount: true,
+            commentCount: true,
+            type: true
+          })
+            .sort({ date: -1 })
+            .skip(skip)
+            .limit(pageSize);
+          articleModel.exec(function(err, docs) {
+            if (err) {
+              res.send(response.err(CODE.ERROR_DATABASE, err, err.message));
+            } else {
+              res.send(
+                response.succ({ total, count: docs.length, list: docs }, "")
+              );
+            }
+          });
         }
       });
-    }
-  });
+    });
 });
 
 // 获取单篇文章
 router.get("/article/single", function(req, res) {
-  console.log(req.query._id);
   Article.update({ _id: req.query._id }, { $inc: { readCount: 1 } }, function(
     err
   ) {
