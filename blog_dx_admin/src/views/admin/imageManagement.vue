@@ -38,7 +38,7 @@
         <el-button type="primary" @click="modalClickOk">确 定</el-button>
       </span>
     </el-dialog>
-    <!-- <transition name="fade">
+    <transition name="fade">
       <div
         class="image-enlargement"
         v-show="isEnlargementShow"
@@ -46,13 +46,13 @@
       >
         <img class="img-current" :src="currentImgSrc" alt="" />
       </div>
-    </transition>-->
+    </transition>
   </div>
 </template>
 
 <script>
 import oneImage from "@/components/oneImage/oneImage";
-import { GetImgList } from "@/api/img";
+import { GetImgList, RemoveImg } from "@/api/img";
 
 export default {
   name: "imageManagement",
@@ -63,7 +63,6 @@ export default {
       total: 0,
       imgList: [],
       currentImgFileName: "",
-      currentImgDeleteLink: "",
       currentImgSrc: "",
       currentImgId: "",
       deleteModal: false,
@@ -72,8 +71,7 @@ export default {
   },
   /* eslint-disable */
   methods: {
-    // 更新数据
-    upDate() {
+    loadImgs() {
       let param = {
         page: this.page,
         pageSize: this.pageSize
@@ -89,34 +87,16 @@ export default {
     deleteClick(index) {
       let currentImgData = this.imgList[index];
       this.currentImgFileName = currentImgData.filename;
-      this.currentImgDeleteLink = currentImgData.delete;
       this.currentImgId = currentImgData._id;
       this.deleteModal = true;
     },
     // 删除确认模态框
     modalClickOk() {
-      this.$message.error("功能尚在开发");
       this.deleteModal = !this.deleteModal;
-      //   this.$axios.post("imgs/remove", { _id: this.currentImgId }).then(res => {
-      //     if (res.status === "0") {
-      //       this.$Message.success("本地删除成功!");
-      //       this.upDate();
-      //       this.$axios.cors(this.currentImgDeleteLink).then(res => {
-      //         if (
-      //           res &&
-      //           (res.data.includes("File delete success") ||
-      //             res.data.includes("File already deleted"))
-      //         ) {
-      //           this.$Message.success("远程删除成功!");
-      //         } else {
-      //           this.$Message.error("远程删除失败!请稍后重试！");
-      //         }
-      //       });
-      //     }
-      //     if (res.status === "3") {
-      //       this.$Message.error(res.msg);
-      //     }
-      //   });
+      RemoveImg({ _id: this.currentImgId }).then(res => {
+        this.$message.success("本地删除成功!");
+        this.loadImgs();
+      });
     },
     resizeClick(index) {
       this.currentImgSrc = this.imgList[index].url;
@@ -124,11 +104,11 @@ export default {
     },
     handlePageChange(val) {
       this.page = val;
-      this.upDate();
+      this.loadImgs();
     }
   },
   created() {
-    this.upDate();
+    this.loadImgs();
   },
   components: {
     oneImage

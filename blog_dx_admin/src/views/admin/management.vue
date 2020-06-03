@@ -147,7 +147,7 @@ export default {
       ChangeState({ _id: id, newData: newData })
         .then(() => {
           this.$message.success("切换成功!");
-          this.loadArticles();
+          this.articles[i].type = 1 ^ this.articles[i].type;
         })
         .catch(() => {});
     },

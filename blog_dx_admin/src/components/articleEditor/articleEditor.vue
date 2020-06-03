@@ -437,7 +437,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@//assets/css/md2html";
 @import "~highlight.js/styles/atom-one-light.css";
 
