@@ -286,10 +286,12 @@ export default {
         mdContent: this.mdContent,
         catalog: this.catalog
       };
-      ChangeArticle({ _id: this.articleId, newData: newData }).then(() => {
-        this.showModal = true;
-        window.localStorage.removeItem("_article");
-      });
+      ChangeArticle({ _id: this.articleId, newData: newData })
+        .then(() => {
+          this.showModal = true;
+          window.localStorage.removeItem("_article");
+        })
+        .catch(() => {});
     },
     autoSave() {
       if (

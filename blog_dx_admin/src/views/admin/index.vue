@@ -28,9 +28,13 @@ import { getUsername, removeUsername, removeToken } from "@/utils/app";
 export default {
   data() {
     return {
-      activeIndex: "",
       username: ""
     };
+  },
+  computed: {
+    activeIndex() {
+      return this.$route.path;
+    }
   },
   methods: {
     logout() {

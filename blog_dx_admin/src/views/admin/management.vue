@@ -144,10 +144,12 @@ export default {
     handleTypeChange(i) {
       let id = this.articles[i]._id;
       let newData = this.articles[i].type === 1 ? { type: 0 } : { type: 1 };
-      ChangeState({ _id: id, newData: newData }).then(() => {
-        this.$message.success("切换成功!");
-        this.loadArticles();
-      });
+      ChangeState({ _id: id, newData: newData })
+        .then(() => {
+          this.$message.success("切换成功!");
+          this.loadArticles();
+        })
+        .catch(() => {});
     },
     handleRemove(index) {
       this.confirmRemove = true;
@@ -155,10 +157,12 @@ export default {
     },
     dialogClickOk() {
       this.confirmRemove = false;
-      RemoveArticle({ _id: this.removeId }).then(() => {
-        this.$message.success("删除成功!");
-        this.loadArticles();
-      });
+      RemoveArticle({ _id: this.removeId })
+        .then(() => {
+          this.$message.success("删除成功!");
+          this.loadArticles();
+        })
+        .catch(() => {});
     },
     handleCurrentChange(val) {
       this.page = val;

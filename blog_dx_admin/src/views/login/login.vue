@@ -74,7 +74,6 @@ export default {
         password: this.formItem.password
       })
         .then(res => {
-          console.log(res);
           let data = res.data;
           setToken(data.resData.token);
           setUsername(data.resData.username);
