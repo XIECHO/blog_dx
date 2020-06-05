@@ -6,5 +6,7 @@ module.exports = {
   REDIS_LINK: "127.0.0.1",
   ACCESSKEY: "BFMhA8txrCAZVykhkopFHnbMUOY0fsMz0wEDFw3v",
   SECRETKEY: "_EezN4lUNF06hNMACx2XXMsE6aVOvyYei9DNHKfd",
-  BUCKET: "blogdx"
+  BUCKET: "blogdx",
+  GITHUB_CLIENT_ID: "d210070a995bece153d1",
+  GITHUB_CLIENT_SECRET: "699545a4a9a2abbb757ac80bea4518814b78fd6c"
 };
