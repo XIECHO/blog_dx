@@ -37,3 +37,5 @@ router.get("/github", function(req, resp) {
       });
   });
 });
+
+module.exports = router;

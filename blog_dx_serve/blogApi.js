@@ -1,6 +1,6 @@
 const article = require("./api/article");
 const comment = require("./api/comment");
-const comment = require("./api/github");
+const github = require("./api/github");
 
 const api = "/blogapi";
 module.exports = function(app) {
