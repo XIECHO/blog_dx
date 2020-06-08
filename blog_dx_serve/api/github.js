@@ -2,9 +2,7 @@ const express = require("express");
 const axios = require("axios");
 const response = require("../utils/response");
 const router = express.Router();
-const redis = require("../database/redis");
 const config = require("../config");
-const CODE = require("../resCode");
 
 router.get("/github", function(req, resp) {
   const requestToken = req.query.code;
@@ -29,7 +27,7 @@ router.get("/github", function(req, resp) {
       }
     })
       .then(res => {
-        resp.send(response.succ({ username: res.data.login }, "用户登录成功"));
+        resp.send(response.succ({ info: res.data }, "用户登录成功"));
       })
       .catch(err => {
         //resp.send(response.succ(err, "用户登录成功"));
