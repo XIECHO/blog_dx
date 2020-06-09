@@ -5,6 +5,26 @@ const common = require("../utils/common");
 const router = express.Router();
 const CODE = require("../resCode");
 
+/**
+ * @swagger
+ * /api/register:
+ *   post:
+ *     tags:
+ *       - admin页面
+ *     requestBody:
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             required:
+ *               - username
+ *               - password
+ */
 router.post("/register", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;

@@ -16,7 +16,26 @@ function check(res, next) {
   });
 }
 
-// 保存图片
+/**
+ * @swagger
+ * /api/img/save:
+ * post:
+ *   tags:
+ *     - admin页面
+ *   summary: 保存图片 
+ *   parameters:
+ *     - name: imgData
+ *       in: body
+ *       schema:
+ *         properties:
+ *           filename:
+ *             type: string
+ *           url:
+ *             type: string
+ *   responses:
+ *     '200':
+ *       description: A list of Person
+ */
 router.post("/img/save", function(req, res) {
   check(res, () => {
     new Img(req.body).save(function(err) {
@@ -29,7 +48,32 @@ router.post("/img/save", function(req, res) {
   });
 });
 
-// 获取图片列表
+/**
+ * @swagger
+ * /api/img/list:
+ * get:
+ *   tags:
+ *     - admin页面
+ *   summary: 获得所有的图片
+ *   parameters:
+ *     - name: page
+ *       in: query
+ *       description: 页码
+ *       type: integer
+ *     - name: pageSize
+ *       in: query
+ *       description: 页面大小
+ *       type: integer
+ *   responses:
+ *     '200':
+ *       description: A list of Person
+ *       schema:
+ *         properties:
+ *           total:
+ *             type: integer
+ *           imgList:
+ *             type: array
+ */
 router.get("/img/list", function(req, res) {
   let page = parseInt(req.query.page);
   let pageSize = parseInt(req.query.pageSize);
@@ -64,7 +108,14 @@ router.get("/img/list", function(req, res) {
   });
 });
 
-// 删除图片
+/**
+ * @swagger
+ * /api/img/remove:
+ * post:
+ *   tags:
+ *     - admin页面
+ *   summary: 删除图片
+ */
 router.post("/img/remove", function(req, res) {
   check(res, () => {
     let _id = req.body._id;

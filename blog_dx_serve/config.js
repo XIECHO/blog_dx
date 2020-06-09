@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   TOKEN_EXPIRE: 60,
   JWT_SECRET: "jjjjjj",
@@ -8,5 +10,12 @@ module.exports = {
   SECRETKEY: "_EezN4lUNF06hNMACx2XXMsE6aVOvyYei9DNHKfd",
   BUCKET: "blogdx",
   GITHUB_CLIENT_ID: "d210070a995bece153d1",
-  GITHUB_CLIENT_SECRET: "699545a4a9a2abbb757ac80bea4518814b78fd6c"
+  GITHUB_CLIENT_SECRET: "699545a4a9a2abbb757ac80bea4518814b78fd6c",
+  swaggerConfig: {
+    openapi: "3.0.0",
+    title: "Express Template",
+    version: "1.0.0",
+    apis: [path.join(__dirname, "/api/*.js")],
+    routerPath: "/api-docs"
+  }
 };

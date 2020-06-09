@@ -4,6 +4,18 @@ const response = require("../utils/response");
 const router = express.Router();
 const config = require("../config");
 
+/**
+ * @swagger
+ * /blogapi/github:
+ *   get:
+ *     tags:
+ *       - blog页面
+ *     summary: GET 测试
+ *     description: 获取单篇文章评论数据
+ *     responses:
+ *       200:
+ *         description: 【成功】 返回 world
+ */
 router.get("/github", function(req, resp) {
   const requestToken = req.query.code;
   axios({

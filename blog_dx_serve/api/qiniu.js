@@ -17,6 +17,14 @@ function check(res, next) {
   });
 }
 
+/**
+ * @swagger
+ * /api/qiniuToken:
+ *   get:
+ *     tags:
+ *       - admin页面
+ *     summary: GET 测试
+ */
 router.get("/qiniuToken", function(req, res) {
   check(res, () => {
     // 七牛账号下的一对有效的Access Key和Secret Key

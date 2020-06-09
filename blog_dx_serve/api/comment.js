@@ -4,7 +4,18 @@ const Comment = require("../model/comment");
 const Article = require("../model/article");
 const response = require("../utils/response");
 
-// 保存一级评论
+/**
+ * @swagger
+ * /blogapi/comment/save_comment:
+ *   post:
+ *     tags:
+ *       - blog页面
+ *     summary: GET 测试
+ *     description: 保存一级评论
+ *     responses:
+ *       200:
+ *         description: 【成功】 返回 world
+ */
 router.post("/comment/save_comment", function(req, res) {
   new Comment(req.body).save(function(err) {
     if (err) {
@@ -25,7 +36,18 @@ router.post("/comment/save_comment", function(req, res) {
   });
 });
 
-// 保存二级评论
+/**
+ * @swagger
+ * /blogapi/comment/save_follow_comment:
+ *   post:
+ *     tags:
+ *       - blog页面
+ *     summary: GET 测试
+ *     description: 保存二级评论
+ *     responses:
+ *       200:
+ *         description: 【成功】 返回 world
+ */
 router.post("/comment/save_follow_comment", function(req, res) {
   Comment.update(
     { _id: req.body.follow_id },
@@ -56,7 +78,18 @@ router.post("/comment/save_follow_comment", function(req, res) {
   );
 });
 
-// 删除一级评论
+/**
+ * @swagger
+ * /blogapi/comment/remove_comment:
+ *   post:
+ *     tags:
+ *       - blog页面
+ *     summary: GET 测试
+ *     description: 删除一级评论
+ *     responses:
+ *       200:
+ *         description: 【成功】 返回 world
+ */
 router.post("/comment/remove_comment", function(req, res) {
   let _id = req.body._id;
 
@@ -89,7 +122,18 @@ router.post("/comment/remove_comment", function(req, res) {
   });
 });
 
-// 删除二级评论
+/**
+ * @swagger
+ * /blogapi/comment/remove_follow_comment:
+ *   post:
+ *     tags:
+ *       - blog页面
+ *     summary: GET 测试
+ *     description: 删除二级评论
+ *     responses:
+ *       200:
+ *         description: 【成功】 返回 world
+ */
 router.post("/comment/remove_follow_comment", function(req, res) {
   let _id = req.body._id;
   let top_id = req.body.top_id;
@@ -123,7 +167,18 @@ router.post("/comment/remove_follow_comment", function(req, res) {
   );
 });
 
-// 获取单篇文章评论数据
+/**
+ * @swagger
+ * /blogapi/comment/get_comments:
+ *   post:
+ *     tags:
+ *       - blog页面
+ *     summary: GET 测试
+ *     description: 获取单篇文章评论数据
+ *     responses:
+ *       200:
+ *         description: 【成功】 返回 world
+ */
 router.get("/comment/get_comments", function(req, res) {
   let comment = Comment.find({ article_id: req.query.article_id });
 
