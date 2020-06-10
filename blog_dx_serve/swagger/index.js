@@ -9,8 +9,14 @@ function setSwagger(app) {
       openapi: swaggerConfig.openapi,
       info: {
         title: swaggerConfig.title,
-        version: swaggerConfig.version
-      }
+        version: swaggerConfig.version,
+        description: swaggerConfig.description
+      },
+      servers: [
+        {
+          url: swaggerConfig.url
+        }
+      ]
     },
     apis: swaggerConfig.apis
   };

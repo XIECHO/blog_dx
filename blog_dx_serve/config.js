@@ -13,9 +13,14 @@ module.exports = {
   GITHUB_CLIENT_SECRET: "699545a4a9a2abbb757ac80bea4518814b78fd6c",
   swaggerConfig: {
     openapi: "3.0.0",
-    title: "Express Template",
-    version: "1.0.0",
-    apis: [path.join(__dirname, "/api/*.js")],
+    title: "Blog API",
+    version: "0.0.1",
+    description: "## Blog页面和Blog admin页面的api",
+    url: "http://localhost:3000",
+    apis: [
+      path.join(__dirname, "/utils/response.js"),
+      path.join(__dirname, "/api/*.js")
+    ],
     routerPath: "/api-docs"
   }
 };

@@ -25,14 +25,23 @@ function check(res, next) {
  *     summary: 获取对应页面的文章
  *     description: 获取对应页面的文章
  *     parameters:
- *       - name: params
+ *       - name: page
  *         in: query
- *         description: 第几页以及每页一共几遍文章
- *         type: object
- *           
+ *         description: 第几页
+ *         schema:
+ *           type: string
+ *       - name: pageSize
+ *         in: query
+ *         description: 每页一共几遍文章
+ *         schema:
+ *           type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 /**
  * @swagger
@@ -40,11 +49,26 @@ function check(res, next) {
  *   get:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
+ *     summary: 获取对应页面的文章
+ *     description: 获取对应页面的文章
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         description: 第几页
+ *         schema:
+ *           type: string
+ *       - name: pageSize
+ *         in: query
+ *         description: 每页一共几遍文章
+ *         schema:
+ *           type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/article/list", function(req, res) {
   let page = parseInt(req.query.page);
@@ -94,6 +118,26 @@ router.get("/article/list", function(req, res) {
 
 /**
  * @swagger
+ * /blogapi/article/single:
+ *   get:
+ *     tags:
+ *       - blog页面
+ *     summary: 获取单篇文章
+ *     parameters:
+ *       - name: articleId
+ *         in: query
+ *         description: 文件的_id
+ *         type: string
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
+ */
+/**
+ * @swagger
  * /api/article/single:
  *   get:
  *     tags:
@@ -105,16 +149,12 @@ router.get("/article/list", function(req, res) {
  *         description: 文件的_id
  *         type: string
  *     responses:
- *       200:
- *         description: 是否获取成功的响应提示
- *         schema:
- *           properties:
- *             resCode:
- *               type: integer
- *             resData:
- *               type: object
- *             resMsg:
- *               type: string
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/article/single", function(req, res) {
   Article.update({ _id: req.query._id }, { $inc: { readCount: 1 } }, function(
@@ -136,27 +176,24 @@ router.get("/article/single", function(req, res) {
 
 /**
  * @swagger
- * /api/article/prev:
- *   get:
- *     tags:
- *       - admin页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
- *     responses:
- *       200:
- *         description: 【成功】 返回 world
- */
-/**
- * @swagger
  * /blogapi/article/prev:
  *   get:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
+ *     summary: 获得上一篇文章
+ *     description: 根据最后修改的时间排序，获得上一篇文章
+ *     parameters:
+ *       - name: date
+ *         in: query
+ *         description: 文件修改的时间
+ *         type: number
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/article/prev", function(req, res) {
   let prev = Article.find(
@@ -180,27 +217,24 @@ router.get("/article/prev", function(req, res) {
 
 /**
  * @swagger
- * /api/article/next:
- *   get:
- *     tags:
- *       - admin页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
- *     responses:
- *       200:
- *         description: 【成功】 返回 world
- */
-/**
- * @swagger
  * /blogapi/article/next:
  *   get:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
+ *     summary: 获得下一篇文章
+ *     description: 根据最后修改的时间排序，获得下一篇文章
+ *     parameters:
+ *       - name: date
+ *         in: query
+ *         description: 文件修改的时间
+ *         type: number
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/article/next", function(req, res) {
   let next = Article.find(
@@ -223,11 +257,20 @@ router.get("/article/next", function(req, res) {
  *   get:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
+ *     summary: 获得所有标签为tag的文章
+ *     description: 根据tag标签，返回所有含有tag标签的文章
+ *     parameters:
+ *       - name: tag
+ *         in: query
+ *         description: 文章标签
+ *         type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/article/tag", function(req, res) {
   let tagModel = Article.find(
@@ -252,56 +295,54 @@ router.get("/article/tag", function(req, res) {
  *       - admin页面
  *     summary: 保存文章
  *     description: 保存文章
- *     parameters:
- *       - name: data
- *         in: body
- *         description: 文章数据.
- *         schema:
- *           articleData:
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
  *             type: object
  *             properties:
- *               title:
- *                 type: string
- *               date:
- *                 type: number
- *               lastDate:
- *                 type: number
- *               tags:
- *                 type: array
- *                 items:
- *                   type: string
- *               readCount:
- *                 type: number
- *               abstract:
- *                 type: string
- *               content:
- *                 type: string
- *               mdContent:
- *                 type: string
- *               type:
- *                 type: number
- *               catalog:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     id:
+ *               articleData:
+ *                 type: object
+ *                 properties:
+ *                   title:
+ *                     type: string
+ *                   date:
+ *                     type: number
+ *                   lastDate:
+ *                     type: number
+ *                   tags:
+ *                     type: array
+ *                     items:
  *                       type: string
- *                     lev:
- *                       type: number
- *                     text:
- *                       type: string    
+ *                   readCount:
+ *                     type: number
+ *                   abstract:
+ *                     type: string
+ *                   content:
+ *                     type: string
+ *                   mdContent:
+ *                     type: string
+ *                   type:
+ *                     type: number
+ *                   catalog:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: string
+ *                         lev:
+ *                           type: number
+ *                         text:
+ *                           type: string
  *     responses:
- *       200:
- *         description: 是否保存成功的响应提示
- *         schema:
- *           properties:
- *             resCode:
- *               type: integer
- *             resData:
- *               type: object
- *             resMsg:
- *               type: string
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/article/save", function(req, res) {
   check(res, () => {
@@ -321,57 +362,54 @@ router.post("/article/save", function(req, res) {
  *   post:
  *     tags:
  *       - admin页面
- *     summary: 修改文章
- *     description: 用于测试基础 GET 请求的接口
- *     parameters:
- *       - name: data
- *         in: body
- *         description: 文章数据.
- *         schema:
- *           required:
- *             - _id
- *             - newData
- *           _id:
- *             type: string
- *           newData:
+ *     summary: 修改文章内容或者修改文章的状态（公开或者是隐私）
+ *     description: 修改文章内容或者修改文章的状态（公开或者是隐私）
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
  *             type: object
  *             properties:
- *               title:
+ *               _id:
  *                 type: string
- *               lastDate:
- *                 type: number
- *               tags:
- *                 type: array
- *                 items:
- *                   type: string
- *               abstract:
- *                 type: string
- *               content:
- *                 type: string
- *               mdContent:
- *                 type: string
- *               catalog:
- *                 type: array
- *                 items:
- *                   type: object
- *                   properties:
- *                     id:
+ *               newData:
+ *                 type: object
+ *                 properties:
+ *                   title:
+ *                     type: string
+ *                   lastDate:
+ *                     type: number
+ *                   tags:
+ *                     type: array
+ *                     items:
  *                       type: string
- *                     lev:
- *                       type: number
- *                     text:
- *                       type: string    
+ *                   abstract:
+ *                     type: string
+ *                   content:
+ *                     type: string
+ *                   mdContent:
+ *                     type: string
+ *                   type:
+ *                     type: number
+ *                   catalog:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: string
+ *                         lev:
+ *                           type: number
+ *                         text:
+ *                           type: string
  *     responses:
- *       200:
- *         description: 是否修改成功的响应提示
- *         schema:
- *           properties:
- *             resCode:
- *               type: integer
- *             resData:
- *               type: object
- *             resMsg:
- *               type: string
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/article/change", function(req, res) {
   check(res, () => {
@@ -391,14 +429,18 @@ router.post("/article/change", function(req, res) {
 /**
  * @swagger
  * /api/article/remove:
- *   get:
+ *   post:
  *     tags:
  *       - admin页面
- *     summary: GET 测试
- *     description: 用于测试基础 GET 请求的接口
+ *     summary: 删除文章
+ *     description: 根据_id删除文章
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/article/remove", function(req, res) {
   check(res, () => {

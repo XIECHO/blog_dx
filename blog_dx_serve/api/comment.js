@@ -10,11 +10,34 @@ const response = require("../utils/response");
  *   post:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
+ *     summary: 保存一级评论
  *     description: 保存一级评论
+*     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user:
+ *                 type: string
+ *               avatar_url:
+ *                 type: string
+ *               comment_content:
+ *                 type: string
+ *               follow_id:
+ *                 type: string
+ *               follow_user:
+ *                 type: string
+ *               comment_follow:
+ *                 type: array
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/comment/save_comment", function(req, res) {
   new Comment(req.body).save(function(err) {
@@ -42,11 +65,32 @@ router.post("/comment/save_comment", function(req, res) {
  *   post:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
+ *     summary: 保存二级评论
  *     description: 保存二级评论
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               user:
+ *                 type: string
+ *               avatar_url:
+ *                 type: string
+ *               comment_content:
+ *                 type: string
+ *               follow_id:
+ *                 type: string
+ *               follow_user:
+ *                 type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/comment/save_follow_comment", function(req, res) {
   Comment.update(
@@ -84,11 +128,24 @@ router.post("/comment/save_follow_comment", function(req, res) {
  *   post:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
+ *     summary: 删除一级评论
  *     description: 删除一级评论
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               _id:
+ *                 type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/comment/remove_comment", function(req, res) {
   let _id = req.body._id;
@@ -128,11 +185,26 @@ router.post("/comment/remove_comment", function(req, res) {
  *   post:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
+ *     summary: 删除二级评论
  *     description: 删除二级评论
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               _id:
+ *                 type: string
+ *               top_id:
+ *                 type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/comment/remove_follow_comment", function(req, res) {
   let _id = req.body._id;
@@ -173,11 +245,20 @@ router.post("/comment/remove_follow_comment", function(req, res) {
  *   post:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
- *     description: 获取单篇文章评论数据
+ *     summary: 获取单篇文章评论数据
+ *     description: 获取article_id的文章评论
+ *     parameters:
+ *       - name: article_id
+ *         in: query
+ *         description: 文章_id
+ *         type: string
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/comment/get_comments", function(req, res) {
   let comment = Comment.find({ article_id: req.query.article_id });

@@ -1,3 +1,21 @@
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Response:
+ *       properties:
+ *         resCode:
+ *           type: integer
+ *         resData:
+ *           type: string
+ *         resMsg:
+ *           type: string
+ *       # Both properties are required
+ *       required:
+ *         - resCode
+ *         - resData
+ *         - resMsg
+ */
 module.exports = {
   succ: function(resData = {}, resMsg = "") {
     return {

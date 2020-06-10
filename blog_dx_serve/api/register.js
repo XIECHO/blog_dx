@@ -11,7 +11,9 @@ const CODE = require("../resCode");
  *   post:
  *     tags:
  *       - admin页面
+ *     summary: 注册
  *     requestBody:
+ *       required: true
  *       content:
  *         application/x-www-form-urlencoded:
  *           schema:
@@ -21,9 +23,13 @@ const CODE = require("../resCode");
  *                 type: string
  *               password:
  *                 type: string
- *             required:
- *               - username
- *               - password
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/register", (req, res) => {
   const username = req.body.username;

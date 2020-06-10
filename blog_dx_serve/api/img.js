@@ -19,22 +19,28 @@ function check(res, next) {
 /**
  * @swagger
  * /api/img/save:
- * post:
- *   tags:
- *     - admin页面
- *   summary: 保存图片 
- *   parameters:
- *     - name: imgData
- *       in: body
- *       schema:
- *         properties:
- *           filename:
- *             type: string
- *           url:
- *             type: string
- *   responses:
- *     '200':
- *       description: A list of Person
+ *   post:
+ *     tags:
+ *       - admin页面
+ *     summary: 保存图片 
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               filename:
+ *                 type: string
+ *               url:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/img/save", function(req, res) {
   check(res, () => {
@@ -51,28 +57,26 @@ router.post("/img/save", function(req, res) {
 /**
  * @swagger
  * /api/img/list:
- * get:
- *   tags:
- *     - admin页面
- *   summary: 获得所有的图片
- *   parameters:
- *     - name: page
- *       in: query
- *       description: 页码
- *       type: integer
- *     - name: pageSize
- *       in: query
- *       description: 页面大小
- *       type: integer
- *   responses:
- *     '200':
- *       description: A list of Person
- *       schema:
- *         properties:
- *           total:
- *             type: integer
- *           imgList:
- *             type: array
+ *   get:
+ *     tags:
+ *       - admin页面
+ *     summary: 获得所有的图片
+ *     parameters:
+ *       - name: page
+ *         in: query
+ *         description: 页码
+ *         type: string
+ *       - name: pageSize
+ *         in: query
+ *         description: 页面大小
+ *         type: string
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/img/list", function(req, res) {
   let page = parseInt(req.query.page);
@@ -111,10 +115,17 @@ router.get("/img/list", function(req, res) {
 /**
  * @swagger
  * /api/img/remove:
- * post:
- *   tags:
- *     - admin页面
- *   summary: 删除图片
+ *   post:
+ *     tags:
+ *       - admin页面
+ *     summary: 删除图片
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/img/remove", function(req, res) {
   check(res, () => {

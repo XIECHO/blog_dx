@@ -10,37 +10,29 @@ const CODE = require("../resCode");
 /**
  * @swagger
  * /api/login:
- *  post:
- *    tags:
- *       - admin页面
- *    summary: 登录
- *    description: 登录并返回token
- *    requestBody:
- *      content:
- *        application/x-www-form-urlencoded:
- *          schema:
- *            type: object
- *            properties:
- *              username:
- *                type: string
- *              password:
- *                type: string
- *            required:
- *              - username
- *              - password
- *    responses:
- *      '200':
- *        description: A list of Person
- *        schema:
- *          type: array
- *          items:
- *            properties:
- *              firstName:
- *                type: string
- *              lastName:
- *                type: string
- *              username:
- *                type: string
+ *   post:
+ *     tags:
+ *        - admin页面
+ *     summary: 登录
+ *     description: 登录并返回token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/x-www-form-urlencoded:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/login", function(req, res) {
   const username = req.body.username;
@@ -91,14 +83,18 @@ router.post("/login", function(req, res) {
 /**
  * @swagger
  * /api/logout:
- *  post:
- *    tags:
- *       - admin页面
- *    summary: 登出
- *    description: 登出并删除token
- *    responses:
- *      '200':
- *        description: A list of Person
+ *   post:
+ *     tags:
+ *        - admin页面
+ *     summary: 登出
+ *     description: 登出并删除token
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.post("/logout", function(req, res) {
   redis.delkey("token").then(() => {

@@ -23,7 +23,14 @@ function check(res, next) {
  *   get:
  *     tags:
  *       - admin页面
- *     summary: GET 测试
+ *     summary: 获得七牛的token
+ *     responses:
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/qiniuToken", function(req, res) {
   check(res, () => {

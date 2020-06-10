@@ -10,11 +10,20 @@ const config = require("../config");
  *   get:
  *     tags:
  *       - blog页面
- *     summary: GET 测试
- *     description: 获取单篇文章评论数据
+ *     summary: github第三方授权登录
+ *     description: github第三方授权登录
+ *     parameters:
+ *       - name: code
+ *         in: query
+ *         description: 码
+ *         type: string 
  *     responses:
- *       200:
- *         description: 【成功】 返回 world
+ *       '200':
+ *        description: OK
+ *        content:
+ *          application/json:
+ *            schema:
+ *              $ref: '#/components/schemas/Response'
  */
 router.get("/github", function(req, resp) {
   const requestToken = req.query.code;
